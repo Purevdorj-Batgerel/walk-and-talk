@@ -1,130 +1,13 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>YouTube Sync Test</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-        background: #f0f0f0;
-      }
-      #video-container {
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      /* The UI Element (Slider) */
-      #sync-slider {
-        width: 640px;
-        cursor: pointer;
-        height: 10px;
-      }
-
-      .controls {
-        width: 640px;
-        text-align: center;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-      }
-      .time-display {
-        font-family: monospace;
-        margin-top: 10px;
-        color: #666;
-      }
-    </style>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>youtube-test</title>
   </head>
   <body>
-    <div id="video-container">
-      <div id="player"></div>
-    </div>
-
-    <div class="controls">
-      <label>UI Synchronized Slider</label><br />
-      <input type="range" id="sync-slider" value="0" min="0" step="0.1" />
-      <div class="time-display" id="time-text">0:00 / 0:00</div>
-    </div>
-
-    <script>
-      // 1. Load the IFrame Player API code asynchronously.
-      var tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      var player;
-      var slider = document.getElementById("sync-slider");
-      var timeText = document.getElementById("time-text");
-      var isUserDragging = false;
-
-      // 2. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player("player", {
-          height: "360",
-          width: "640",
-          videoId: "OzDLPVJBXjs",
-          playerVars: {
-            playsinline: 1,
-            controls: 1, // Show YT controls for testing
-          },
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          },
-        });
-      }
-
-      function onPlayerReady(event) {
-        // Set slider max once video duration is known
-        slider.max = player.getDuration();
-        updateLoop(); // Start the heartbeat loop
-      }
-
-      // 3. The "Heartbeat" Loop (Video -> UI)
-      function updateLoop() {
-        if (player && player.getCurrentTime && !isUserDragging) {
-          const currentTime = player.getCurrentTime();
-          const duration = player.getDuration();
-
-          // Update Slider position
-          slider.value = currentTime;
-
-          // Update Time Text
-          timeText.innerText =
-            formatTime(currentTime) + " / " + formatTime(duration);
-        }
-        requestAnimationFrame(updateLoop); // Smooth 60fps updates
-      }
-
-      // 4. Handle User Interaction (UI -> Video)
-      slider.addEventListener("input", function () {
-        isUserDragging = true;
-      });
-
-      slider.addEventListener("change", function () {
-        player.seekTo(slider.value, true);
-        isUserDragging = false;
-      });
-
-      // Helper: Format seconds to MM:SS
-      function formatTime(time) {
-        time = Math.round(time);
-        var minutes = Math.floor(time / 60);
-        var seconds = time - minutes * 60;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        return minutes + ":" + seconds;
-      }
-
-      // Optional: Pause UI animation if video pauses
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-          console.log("Video Started - UI Syncing...");
-        }
-      }
-    </script>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
