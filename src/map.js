@@ -12,7 +12,7 @@ export class LibreMap {
     this.coordinates = routeData.map((point) => [point.lng, point.lat]);
     this.routeData = routeData;
     this.currentPosition = null;
-    this.isAutoCentering = true;
+    this.isAutoCentering = false;
     this.autoCenterTimeout = null;
 
     this.map = new maplibregl.Map({
@@ -22,25 +22,25 @@ export class LibreMap {
       zoom: 18,
     });
 
-    this.map.on("mousedown", () => {
-      this.isAutoCentering = false;
+    // this.map.on("mousedown", () => {
+    //   this.isAutoCentering = false;
 
-      this.autoCenterTimeout = setTimeout(() => {
-        this.isAutoCentering = true;
-      }, 3000);
-    });
+    //   this.autoCenterTimeout = setTimeout(() => {
+    //     this.isAutoCentering = true;
+    //   }, 3000);
+    // });
 
-    this.map.on("movestart", (e) => {
-      if (e.originalEvent) {
-        this.isAutoCentering = false;
-        if (this.autoCenterTimeout) {
-          clearTimeout(this.autoCenterTimeout);
-        }
-        this.autoCenterTimeout = setTimeout(() => {
-          this.isAutoCentering = true;
-        }, 3000);
-      }
-    });
+    // this.map.on("movestart", (e) => {
+    //   if (e.originalEvent) {
+    //     this.isAutoCentering = false;
+    //     if (this.autoCenterTimeout) {
+    //       clearTimeout(this.autoCenterTimeout);
+    //     }
+    //     this.autoCenterTimeout = setTimeout(() => {
+    //       this.isAutoCentering = true;
+    //     }, 3000);
+    //   }
+    // });
 
     this.map.on("load", () => {
       this.addRouteLayer(getTheme());

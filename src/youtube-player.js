@@ -17,7 +17,7 @@ export class YouTubePlayer {
     this.timeText = document.getElementById("time-text");
     this.playPauseBtn = document.getElementById("play-pause-btn");
 
-    this.setupEventListeners();
+    // this.setupEventListeners();
 
     // Wait for YouTube API to be ready
     if (window.YT && window.YT.Player) {
@@ -36,13 +36,13 @@ export class YouTubePlayer {
       },
       events: {
         onReady: () => this.onPlayerReady(),
-        onStateChange: (event) => this.onPlayerStateChange(event),
+        // onStateChange: (event) => this.onPlayerStateChange(event),
       },
     });
   }
 
   onPlayerReady() {
-    this.slider.max = this.player.getDuration();
+    // this.slider.max = this.player.getDuration();
     this.startUpdateLoop();
   }
 
@@ -52,29 +52,28 @@ export class YouTubePlayer {
         const currentTime = this.player.getCurrentTime();
         const duration = this.player.getDuration();
 
-        this.slider.value = currentTime;
-        this.timeText.innerText = currentTime + " / " + duration;
+        // this.slider.value = currentTime;
+        // this.timeText.innerText = currentTime + " / " + duration;
         // this.formatTime(currentTime) + " / " + this.formatTime(duration);
-        
-        if (this.timeInput && document.activeElement !== this.timeInput) {
-          this.timeInput.value = Math.round(currentTime);
-        }
+
+        // if (this.timeInput && document.activeElement !== this.timeInput) {
+        //   this.timeInput.value = Math.round(currentTime);
+        // }
       }
       this.updateLoopId = requestAnimationFrame(update);
     };
     update();
   }
 
-  onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-      console.log("Video Started - UI Syncing...");
-      this.playPauseBtn.textContent = "Pause";
-    } else if (event.data == YT.PlayerState.PAUSED) {
-      this.playPauseBtn.textContent = "Play";
-    } else if (event.data == YT.PlayerState.ENDED) {
-      this.playPauseBtn.textContent = "Play";
-    }
-  }
+  // onPlayerStateChange(event) {
+  //   if (event.data == YT.PlayerState.PLAYING) {
+  //     this.playPauseBtn.textContent = "Pause";
+  //   } else if (event.data == YT.PlayerState.PAUSED) {
+  //     this.playPauseBtn.textContent = "Play";
+  //   } else if (event.data == YT.PlayerState.ENDED) {
+  //     this.playPauseBtn.textContent = "Play";
+  //   }
+  // }
 
   setupEventListeners() {
     this.slider.addEventListener("input", () => {
