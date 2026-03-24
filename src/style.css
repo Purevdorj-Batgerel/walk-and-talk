@@ -21,6 +21,8 @@ body {
   height: 100%;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 #map-wrapper {
@@ -37,6 +39,7 @@ body {
 #video-container {
   width: 100%;
   max-width: 800px;
+  flex-shrink: 0;
 }
 
 #video-container iframe {
@@ -89,4 +92,39 @@ body {
   height: 64px;
   border-radius: 12px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#moments {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.moment {
+  width: 100%;
+  height: 36px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  flex-shrink: 0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .timestamp {
+    font-family: monospace;
+    color: #666;
+  }
+
+  .text {
+    font-family: monospace;
+    color: #666;
+  }
+
+  &.current {
+    border-left: 8px solid #3b82f6;
+  }
 }
