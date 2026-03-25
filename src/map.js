@@ -8,9 +8,10 @@ const STYLES = {
 };
 
 export class LibreMap {
-  constructor(containerId, center, routeData) {
+  constructor(containerId, center, routeData, placesData) {
     this.coordinates = routeData.map((point) => [point.lng, point.lat]);
     this.routeData = routeData;
+    this.placesData = placesData;
     this.currentPosition = null;
     this.isAutoCentering = false;
     this.autoCenterTimeout = null;
@@ -45,6 +46,7 @@ export class LibreMap {
     this.map.on("load", () => {
       this.addRouteLayer(getTheme());
       this.addPositionLayer();
+      this.addPlaces();
     });
 
     window
@@ -123,6 +125,25 @@ export class LibreMap {
         "circle-stroke-width": 3,
         "circle-stroke-color": "#fff",
       },
+    });
+  }
+
+  addPlaces() {
+    this.placesData.forEach((place) => {
+      const el = document.createElement("div");
+      el.className = `place-card ${place.type}`;
+
+      const link = document.createElement("a");
+      link.href = place.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = place.name;
+
+      el.appendChild(link);
+
+      new maplibregl.Marker({ element: el })
+        .setLngLat([place.lng, place.lat])
+        .addTo(this.map);
     });
   }
 
