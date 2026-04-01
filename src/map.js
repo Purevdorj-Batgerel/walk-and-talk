@@ -18,7 +18,7 @@ export class LibreMap {
 
     this.map = new maplibregl.Map({
       container: containerId,
-      style: "https://tiles.openfreemap.org/styles/bright",
+      style: "https://tiles.openfreemap.org/styles/liberty",
       center,
       zoom: 18,
     });

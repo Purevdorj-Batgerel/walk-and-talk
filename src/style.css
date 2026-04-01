@@ -114,6 +114,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
+  cursor: pointer;
 
   .timestamp {
     font-family: monospace;
@@ -158,4 +159,29 @@ body {
 
 .place-card:hover {
   background-color: #f9f9f9;
+}
+
+.pixel-corners {
+  clip-path: polygon(
+    0px calc(100% - 8px),
+    4px calc(100% - 8px),
+    4px calc(100% - 4px),
+    8px calc(100% - 4px),
+    8px 100%,
+    calc(100% - 8px) 100%,
+    calc(100% - 8px) calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 8px),
+    100% calc(100% - 8px),
+    100% 8px,
+    calc(100% - 4px) 8px,
+    calc(100% - 4px) 4px,
+    calc(100% - 8px) 4px,
+    calc(100% - 8px) 0px,
+    8px 0px,
+    8px 4px,
+    4px 4px,
+    4px 8px,
+    0px 8px
+  );
 }
